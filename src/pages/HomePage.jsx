@@ -2,6 +2,19 @@ import React from 'react';
 import { ArrowRight, Send, Mail, Phone, MapPin } from 'lucide-react';
 
 const HomePage = () => {
+  const servicesRef = React.useRef(null);
+  const brandsRef = React.useRef(null);
+  const [servicesProgress, setServicesProgress] = React.useState(0);
+  const [brandsProgress, setBrandsProgress] = React.useState(0);
+
+  const handleScroll = (ref, setProgress) => {
+    if (!ref.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+    const totalScrollable = scrollWidth - clientWidth;
+    const progress = totalScrollable > 0 ? (scrollLeft / totalScrollable) * 100 : 0;
+    setProgress(progress);
+  };
+
   const team = [
     { name: 'Patric Adams', role: 'CEO & Co-founder', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1974&auto=format&fit=crop' },
     { name: 'Dilan Stein', role: 'Head Engineer', image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop' },
@@ -119,9 +132,11 @@ const HomePage = () => {
             <h2 style={{ fontSize: '40px' }}>Our Core Services</h2>
             <p style={{ color: 'var(--text-muted)' }}>Tailored solutions for a healthier lifestyle.</p>
           </div>
-          <div className="services-slider-container">
+          <div className="services-slider-container"
+               ref={servicesRef}
+               onScroll={() => handleScroll(servicesRef, setServicesProgress)}>
             <div className="services-grid">
-              {services.map((service, i) => (
+              {[...services, ...services].map((service, i) => (
                 <div key={i} className="service-card" style={{ padding: '40px', background: 'white', borderRadius: '20px', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
                   <div style={{ fontSize: '50px', marginBottom: '20px' }}>{service.icon}</div>
                   <h3 style={{ marginBottom: '15px' }}>{service.title}</h3>
@@ -129,6 +144,14 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="slider-indicator-wrapper dots-indicator">
+            {services.map((_, i) => (
+              <div 
+                key={i} 
+                className={`indicator-dot ${Math.round((servicesProgress / 100) * (services.length - 1)) === i ? 'active' : ''}`}
+              ></div>
+            ))}
           </div>
         </div>
       </section>
@@ -140,7 +163,9 @@ const HomePage = () => {
             <h2 style={{ fontSize: '48px', fontWeight: '800', textTransform: 'uppercase', marginBottom: '20px' }}>Our Featured Brands</h2>
             <p style={{ color: 'var(--text-muted)' }}>Quality brands trusted by thousands of businesses across the UK.</p>
           </div>
-          <div className="brands-slider-container">
+          <div className="brands-slider-container"
+               ref={brandsRef}
+               onScroll={() => handleScroll(brandsRef, setBrandsProgress)}>
             <div className="brands-grid">
               {[
                 { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
@@ -148,7 +173,13 @@ const HomePage = () => {
                 { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
                 { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
                 { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
-              ].map((brand, i) => (
+              ].concat([
+                { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Double Lucky', img: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
+              ]).map((brand, i) => (
                 <div key={i} className="brand-item" style={{ 
                   padding: '30px', 
                   background: '#f8f9fa', 
@@ -162,6 +193,14 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="slider-indicator-wrapper dots-indicator">
+            {[1, 2, 3, 4, 5].map((_, i) => (
+              <div 
+                key={i} 
+                className={`indicator-dot ${Math.round((brandsProgress / 100) * 4) === i ? 'active' : ''}`}
+              ></div>
+            ))}
           </div>
         </div>
       </section>
@@ -328,6 +367,28 @@ const HomePage = () => {
           opacity: 1;
         }
 
+        .slider-indicator-wrapper {
+          display: none;
+          justify-content: center;
+          gap: 8px;
+          margin-top: -10px;
+          margin-bottom: 30px;
+        }
+
+        .indicator-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 10px;
+          background: #e2e8f0;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .indicator-dot.active {
+          width: 25px;
+          background: var(--primary);
+          box-shadow: 0 4px 10px rgba(62, 189, 147, 0.3);
+        }
+
         .team-member:hover img {
           transform: scale(1.1);
         }
@@ -394,10 +455,14 @@ const HomePage = () => {
           .services-slider-container, .brands-slider-container {
             overflow-x: auto;
             margin: 0 -20px;
-            padding: 20px;
+            padding: 20px 20px 40px;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none; /* Hide scrollbar Firefox */
+          }
+          
+          .slider-indicator-wrapper {
+            display: flex;
           }
           .services-slider-container::-webkit-scrollbar, .brands-slider-container::-webkit-scrollbar {
             display: none; /* Hide scrollbar Chrome/Safari */
@@ -443,21 +508,38 @@ const HomePage = () => {
             border-radius: 25px;
           }
           .newsletter-form { 
-            flex-direction: column; 
-            height: auto; 
-            width: 100%;
-            padding: 15px; 
-            border-radius: 20px; 
+            flex-direction: row !important; 
+            height: 52px !important; 
+            width: 100% !important;
+            max-width: 380px !important;
+            margin: 0 auto !important;
+            padding: 0 4px 0 15px !important; 
+            border-radius: 26px !important; 
+            background: white !important;
+            display: flex !important;
+            align-items: center !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important;
           }
           .newsletter-form input { 
-            padding: 15px 0; 
-            text-align: center; 
-            width: 100%; 
+            padding: 0 10px !important; 
+            font-size: 13px !important; 
+            text-align: left !important;
+            width: 100%;
+            border: none;
+            outline: none;
           }
           .newsletter-form .btn-primary { 
-            width: 100%; 
-            border-radius: 12px; 
-            height: 55px;
+            width: auto !important; 
+            min-width: 100px !important;
+            padding: 0 15px !important;
+            border-radius: 22px !important; 
+            height: 44px !important;
+            font-size: 12px !important;
+            white-space: nowrap !important;
+          }
+          .newsletter-form svg {
+            width: 16px;
+            height: 16px;
           }
           
           .why-grid, .team-grid { 
