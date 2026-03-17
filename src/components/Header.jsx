@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +22,9 @@ const Header = () => {
           }
         }
       }
+
+      // Track scroll for shadow
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -28,7 +32,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="main-header">
+    <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container">
         <div className="header-inner">
           <Link to="/" className="logo">
@@ -55,11 +59,18 @@ const Header = () => {
       <style dangerouslySetInnerHTML={{ __html: `
         .main-header {
           background: white;
-          box-shadow: var(--shadow-sm);
           position: sticky;
           top: 0;
           z-index: 1000;
           padding: 15px 0;
+          transition: all 0.3s ease;
+          border-bottom: 1px solid transparent;
+        }
+
+        .main-header.scrolled {
+          box-shadow: var(--shadow-sm);
+          border-bottom: 1px solid #eee;
+          padding: 12px 0;
         }
 
         .header-inner {
