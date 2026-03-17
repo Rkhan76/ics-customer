@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search } from 'lucide-react';
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
+    if (location.pathname === '/products') {
+      setActiveSection('products');
+      return;
+    }
+
     const handleScroll = () => {
       const sections = ['home', 'about', 'services', 'brands', 'team', 'contact'];
       const scrollPosition = window.scrollY + 100; // Offset for sticky header
@@ -54,12 +60,13 @@ const Header = () => {
               <X size={24} />
             </button>
             <ul className="nav-links">
-              <li><a href="#home" className={activeSection === 'home' ? 'active' : ''} onClick={closeMenu}>Home</a></li>
-              <li><a href="#about" className={activeSection === 'about' ? 'active' : ''} onClick={closeMenu}>About Us</a></li>
-              <li><a href="#services" className={activeSection === 'services' ? 'active' : ''} onClick={closeMenu}>Services</a></li>
-              <li><a href="#brands" className={activeSection === 'brands' ? 'active' : ''} onClick={closeMenu}>Our Brands</a></li>
-              <li><a href="#team" className={activeSection === 'team' ? 'active' : ''} onClick={closeMenu}>Our Team</a></li>
-              <li><a href="#contact" className={activeSection === 'contact' ? 'active' : ''} onClick={closeMenu}>Contact</a></li>
+              <li><Link to="/" className={activeSection === 'home' ? 'active' : ''} onClick={closeMenu}>Home</Link></li>
+              <li><Link to="/products" className={activeSection === 'products' ? 'active' : ''} onClick={closeMenu}>Products</Link></li>
+              <li><a href="/#about" className={activeSection === 'about' ? 'active' : ''} onClick={closeMenu}>About Us</a></li>
+              <li><a href="/#services" className={activeSection === 'services' ? 'active' : ''} onClick={closeMenu}>Services</a></li>
+              <li><a href="/#brands" className={activeSection === 'brands' ? 'active' : ''} onClick={closeMenu}>Our Brands</a></li>
+              <li><a href="/#team" className={activeSection === 'team' ? 'active' : ''} onClick={closeMenu}>Our Team</a></li>
+              <li><a href="/#contact" className={activeSection === 'contact' ? 'active' : ''} onClick={closeMenu}>Contact</a></li>
             </ul>
           </nav>
 
