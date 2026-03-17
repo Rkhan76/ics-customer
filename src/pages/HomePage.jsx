@@ -7,19 +7,38 @@ const HomePage = () => {
   const [servicesProgress, setServicesProgress] = React.useState(0);
   const [brandsProgress, setBrandsProgress] = React.useState(0);
 
-  const handleScroll = (ref, setProgress) => {
+  const handleScroll = (ref, setProgress, itemCount) => {
     if (!ref.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-    const totalScrollable = scrollWidth - clientWidth;
-    const progress = totalScrollable > 0 ? (scrollLeft / totalScrollable) * 100 : 0;
-    setProgress(progress);
+    
+    const singleSetWidth = scrollWidth / 3;
+    
+    // Seamless Jump Technique: 
+    // We jump the scroll position instantly without animation
+    if (scrollLeft >= singleSetWidth * 2) {
+      ref.current.style.scrollSnapType = 'none';
+      ref.current.scrollLeft = scrollLeft - singleSetWidth;
+      ref.current.style.scrollSnapType = 'x mandatory';
+    } else if (scrollLeft <= singleSetWidth / 2) {
+      // If we go too far left, jump right to the middle set
+      ref.current.style.scrollSnapType = 'none';
+      ref.current.scrollLeft = scrollLeft + singleSetWidth;
+      ref.current.style.scrollSnapType = 'x mandatory';
+    }
+
+    // Active Dot Tracking
+    // We calculate which item we ARE looking at in the middle (main) set
+    const normalizedScroll = scrollLeft % singleSetWidth;
+    const itemWidth = singleSetWidth / itemCount;
+    const activeIndex = Math.round(normalizedScroll / itemWidth) % itemCount;
+    setProgress(activeIndex);
   };
 
   const team = [
-    { name: 'Patric Adams', role: 'CEO & Co-founder', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1974&auto=format&fit=crop' },
-    { name: 'Dilan Stein', role: 'Head Engineer', image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop' },
-    { name: 'Seth Boyle', role: 'Creative Director', image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop' },
-    { name: 'Robert Fox', role: 'Store Manager', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop' },
+    { name: 'Patric Adams', role: 'CEO & Co-founder', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop' },
+    { name: 'Dilan Stein', role: 'Head Engineer', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1974&auto=format&fit=crop' },
+    { name: 'Seth Boyle', role: 'Creative Director', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop' },
+    { name: 'Robert Fox', role: 'Store Manager', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1974&auto=format&fit=crop' },
   ];
 
   const services = [
@@ -30,6 +49,24 @@ const HomePage = () => {
     { title: 'Daily Deals', desc: 'Fresh new deals every day on your favorite categories and products.', icon: '🏷️', color: '#FFF3EB' },
     { title: 'Easy Returns', desc: 'Not satisfied with a product? Return it within 24 hours for a full refund.', icon: '🔄', color: '#FFF3FF' },
   ];
+
+  const brands = [
+    { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
+    { name: 'Double Lucky', img: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=200&h=100&auto=format&fit=crop' },
+    { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
+    { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
+    { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
+  ];
+
+  React.useEffect(() => {
+    const centerSlider = (ref) => {
+      if (ref.current) {
+        ref.current.scrollLeft = ref.current.scrollWidth / 3;
+      }
+    };
+    centerSlider(servicesRef);
+    centerSlider(brandsRef);
+  }, []);
 
   return (
     <div className="homepage">
@@ -134,9 +171,9 @@ const HomePage = () => {
           </div>
           <div className="services-slider-container"
                ref={servicesRef}
-               onScroll={() => handleScroll(servicesRef, setServicesProgress)}>
+               onScroll={() => handleScroll(servicesRef, setServicesProgress, services.length)}>
             <div className="services-grid">
-              {[...services, ...services].map((service, i) => (
+              {[...services, ...services, ...services].map((service, i) => (
                 <div key={i} className="service-card" style={{ padding: '40px', background: 'white', borderRadius: '20px', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
                   <div style={{ fontSize: '50px', marginBottom: '20px' }}>{service.icon}</div>
                   <h3 style={{ marginBottom: '15px' }}>{service.title}</h3>
@@ -149,7 +186,7 @@ const HomePage = () => {
             {services.map((_, i) => (
               <div 
                 key={i} 
-                className={`indicator-dot ${Math.round((servicesProgress / 100) * (services.length - 1)) === i ? 'active' : ''}`}
+                className={`indicator-dot ${servicesProgress === i ? 'active' : ''}`}
               ></div>
             ))}
           </div>
@@ -165,21 +202,9 @@ const HomePage = () => {
           </div>
           <div className="brands-slider-container"
                ref={brandsRef}
-               onScroll={() => handleScroll(brandsRef, setBrandsProgress)}>
+               onScroll={() => handleScroll(brandsRef, setBrandsProgress, brands.length)}>
             <div className="brands-grid">
-              {[
-                { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Double Lucky', img: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
-              ].concat([
-                { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Double Lucky', img: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
-                { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
-              ]).map((brand, i) => (
+              {[...brands, ...brands, ...brands].map((brand, i) => (
                 <div key={i} className="brand-item" style={{ 
                   padding: '30px', 
                   background: '#f8f9fa', 
@@ -195,10 +220,10 @@ const HomePage = () => {
             </div>
           </div>
           <div className="slider-indicator-wrapper dots-indicator">
-            {[1, 2, 3, 4, 5].map((_, i) => (
+            {brands.map((_, i) => (
               <div 
                 key={i} 
-                className={`indicator-dot ${Math.round((brandsProgress / 100) * 4) === i ? 'active' : ''}`}
+                className={`indicator-dot ${brandsProgress === i ? 'active' : ''}`}
               ></div>
             ))}
           </div>
@@ -389,6 +414,14 @@ const HomePage = () => {
           box-shadow: 0 4px 10px rgba(62, 189, 147, 0.3);
         }
 
+        .services-grid .service-card:nth-child(n+7) {
+          display: none;
+        }
+
+        .brands-grid .brand-item:nth-child(n+6) {
+          display: none;
+        }
+
         .team-member:hover img {
           transform: scale(1.1);
         }
@@ -448,6 +481,11 @@ const HomePage = () => {
           .hero-content p { font-size: 24px; }
           .newsletter-form { width: 100%; max-width: 450px; }
           
+          .services-grid .service-card:nth-child(n+7),
+          .brands-grid .brand-item:nth-child(n+6) {
+            display: block !important;
+          }
+
           .why-grid, .team-grid { 
             grid-template-columns: repeat(2, 1fr) !important; 
           }
