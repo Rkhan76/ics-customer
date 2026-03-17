@@ -45,9 +45,9 @@ const Header = () => {
     <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container">
         <div className="header-inner">
-          <Link to="/" className="logo">
+          <a href="#home" className="logo" onClick={closeMenu}>
             <img src="/icslogomain.png" alt="iCS (UK) LTD" className="logo-img" />
-          </Link>
+          </a>
 
           <nav className={`nav-wrapper ${isMenuOpen ? 'open' : ''}`}>
             <button className="menu-close" onClick={closeMenu}>
