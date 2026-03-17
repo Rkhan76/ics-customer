@@ -49,6 +49,7 @@ const Header = () => {
 
   return (
     <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
+      <div className={`menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={closeMenu}></div>
       <div className="container">
         <div className="header-inner">
           <a href="#home" className="logo" onClick={closeMenu}>
@@ -56,7 +57,7 @@ const Header = () => {
           </a>
 
           <nav className={`nav-wrapper ${isMenuOpen ? 'open' : ''}`}>
-            <button className="menu-close" onClick={closeMenu}>
+            <button className="menu-close-btn" onClick={closeMenu}>
               <X size={24} />
             </button>
             <ul className="nav-links">
@@ -178,12 +179,53 @@ const Header = () => {
           color: var(--text-muted);
         }
 
-        .menu-toggle, .menu-close {
-          display: none;
+        .menu-toggle, .menu-close-btn {
           background: none;
           border: none;
           cursor: pointer;
           color: var(--secondary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .mobile-menu-header {
+          display: none;
+        }
+
+        .menu-close-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: var(--secondary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s;
+        }
+
+        .menu-close-btn:hover {
+          color: var(--primary);
+        }
+
+        .menu-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.2);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          z-index: 1500;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.4s ease;
+        }
+
+        .menu-overlay.open {
+          opacity: 1;
+          visibility: visible;
         }
 
         @media (max-width: 1024px) {
@@ -194,46 +236,74 @@ const Header = () => {
 
         @media (max-width: 991px) {
           .menu-toggle {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
           }
 
           .nav-wrapper {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100vh;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 15px;
+            width: 200px;
             background: white;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-            transition: 0.4s ease;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 80px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            padding: 20px;
             z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: 0.3s ease;
           }
 
           .nav-wrapper.open {
-            right: 0;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
           }
 
-          .menu-close {
-            display: block;
+          .menu-close-btn {
             position: absolute;
-            top: 25px;
-            right: 25px;
+            top: 15px;
+            right: 15px;
+            display: block;
           }
 
           .nav-links {
             flex-direction: column;
-            gap: 25px;
+            gap: 0;
+            margin-top: 15px;
           }
 
           .nav-links a {
-            font-size: 18px;
+            font-size: 15px;
+            padding: 12px 0;
+            display: block;
+            border-bottom: 1px solid #f5f5f5;
+            transition: 0.2s;
+          }
+
+          .nav-links li:last-child a {
+            border-bottom: none;
+          }
+
+          .nav-links a:hover, .nav-links a.active {
+            background: transparent;
+            color: var(--primary);
+            padding-left: 5px;
+          }
+
+          .nav-links a.active::after {
+            display: none;
           }
 
           .header-search {
-            display: none; /* Hide search on small mobile if it crowds the logo */
+            display: none;
           }
         }
 
