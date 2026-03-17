@@ -143,7 +143,7 @@ const HomePage = () => {
               { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
               { name: 'Double Lucky', img: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=200&h=100&auto=format&fit=crop' },
               { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
-              { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1614850523296-e8c041de4398?q=80&w=200&h=100&auto=format&fit=crop' },
+              { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
               { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
             ].map((brand, i) => (
               <div key={i} className="brand-item" style={{ 
