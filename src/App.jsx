@@ -3,36 +3,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import ProductPage from './pages/ProductPage';
-import AboutPage from './pages/AboutPage';
-import TeamPage from './pages/TeamPage';
-import HotOffersPage from './pages/HotOffersPage';
-import ContactPage from './pages/ContactPage';
-import AccountPage from './pages/AccountPage';
-import ProductDetailsPage from './pages/ProductDetailsPage';
-import CartPage from './pages/CartPage';
-import CartDrawer from './components/CartDrawer';
-import { useState } from 'react';
 
 function App() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-
   return (
     <Router>
-      <div className="app-wrapper">
-        <Header onOpenCart={() => setIsCartOpen(true)} />
-        <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <div className="app-wrapper" style={{ scrollBehavior: 'smooth' }}>
+        <Header />
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/shop" element={<ProductPage />} />
-            <Route path="/product/:id" element={<ProductDetailsPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/offers" element={<HotOffersPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/cart" element={<CartPage />} />
+            {/* All other routes removed for corporate landing page */}
           </Routes>
         </main>
         <Footer />
@@ -44,6 +24,9 @@ function App() {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        :root {
+          scroll-behavior: smooth;
+        }
         .app-wrapper {
           min-height: 100vh;
           display: flex;

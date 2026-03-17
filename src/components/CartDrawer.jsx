@@ -52,7 +52,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
           </div>
           <div className="drawer-actions">
             <Link to="/cart" className="view-cart-btn" onClick={onClose}>View Cart</Link>
-            <button className="checkout-btn">Checkout</button>
+            <Link to="/checkout" className="checkout-btn" onClick={onClose}>Checkout</Link>
           </div>
         </div>
       </div>
