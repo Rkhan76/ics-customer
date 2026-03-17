@@ -215,9 +215,9 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div style={{ background: 'white', padding: '50px', borderRadius: '30px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }}>
+            <div style={{ background: 'white', padding: '50px', borderRadius: '30px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }} className="contact-form-panel">
               <h2 style={{ marginBottom: '30px' }}>Send a Message</h2>
-              <form style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+              <form style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }} className="message-form">
                 <input type="text" placeholder="Full Name" className="form-input" />
                 <input type="email" placeholder="Email Address" className="form-input" />
                 <textarea placeholder="Tell us how we can help..." style={{ gridColumn: 'span 2', minHeight: '150px' }} className="form-input"></textarea>
@@ -226,6 +226,19 @@ const HomePage = () => {
                 </button>
               </form>
             </div>
+          </div>
+          
+          {/* Map Integration */}
+          <div className="map-container" style={{ marginTop: '60px', borderRadius: '30px', overflow: 'hidden', height: '450px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }}>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190255.463162791!2d-0.3475306!3d51.5287718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5abbd528!2sLondon!5e0!3m2!1sen!2suk!4v1710714000000!5m2!1sen!2suk" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen="" 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </section>
@@ -331,6 +344,93 @@ const HomePage = () => {
           border-color: var(--primary);
           background: white;
           box-shadow: 0 0 0 4px rgba(62, 189, 147, 0.1);
+        }
+        /* High-End Widescreen Support */
+        @media (min-width: 1400px) {
+          .container { max-width: 1320px; }
+        }
+
+        /* Large PC / Laptop */
+        @media (max-width: 1200px) {
+          .hero-banner { padding: 0 60px; }
+          .hero-content h1 { font-size: 60px; }
+          .why-grid { gap: 30px; }
+        }
+
+        /* Tablets */
+        @media (max-width: 992px) {
+          .hero-banner { 
+            height: auto; 
+            padding: 80px 40px; 
+            background-position: center right -150px;
+            background-size: cover;
+          }
+          .hero-content h1 { font-size: 48px; }
+          .hero-content p { font-size: 24px; }
+          .newsletter-form { width: 100%; max-width: 450px; }
+          
+          .why-grid, .services-grid, .team-grid { 
+            grid-template-columns: repeat(2, 1fr) !important; 
+          }
+          
+          .about-section .row {
+            flex-direction: column !important;
+            text-align: center;
+            gap: 40px !important;
+          }
+          
+          .brands-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          .contact-section .container > div:first-child { 
+            grid-template-columns: 1fr !important; 
+            gap: 40px !important; 
+          }
+        }
+
+        /* Small Tablets / Mobiles */
+        @media (max-width: 768px) {
+          .py-80 { padding: 60px 0; }
+          .hero-banner { 
+            background-image: none !important; 
+            background-color: #FFF9E5;
+            text-align: center;
+            justify-content: center;
+            padding: 60px 20px;
+            border-radius: 25px;
+          }
+          .newsletter-form { 
+            flex-direction: column; 
+            height: auto; 
+            width: 100%;
+            padding: 15px; 
+            border-radius: 20px; 
+          }
+          .newsletter-form input { 
+            padding: 15px 0; 
+            text-align: center; 
+            width: 100%; 
+          }
+          .newsletter-form .btn-primary { 
+            width: 100%; 
+            border-radius: 12px; 
+            height: 55px;
+          }
+          
+          .why-grid, .services-grid, .team-grid, .brands-grid { 
+            grid-template-columns: 1fr !important; 
+          }
+          
+          .message-form { grid-template-columns: 1fr !important; }
+          .message-form textarea, .message-form button { grid-column: span 1 !important; }
+          
+          .contact-form-panel { padding: 30px !important; }
+          .map-container { height: 350px; border-radius: 20px; }
+        }
+
+        /* Extra Small Phones */
+        @media (max-width: 480px) {
+          .hero-content h1 { font-size: 34px; }
+          .hero-content p { font-size: 18px; }
+          .section-title, h2 { font-size: 32px !important; }
         }
       ` }} />
     </div>
