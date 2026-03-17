@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Menu, X, Search } from 'lucide-react';
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +33,14 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container">
@@ -39,19 +49,28 @@ const Header = () => {
             <img src="/icslogomain.png" alt="iCS (UK) LTD" className="logo-img" />
           </Link>
 
-          <nav className="nav-wrapper">
+          <nav className={`nav-wrapper ${isMenuOpen ? 'open' : ''}`}>
+            <button className="menu-close" onClick={closeMenu}>
+              <X size={24} />
+            </button>
             <ul className="nav-links">
-              <li><a href="#home" className={activeSection === 'home' ? 'active' : ''}>Home</a></li>
-              <li><a href="#about" className={activeSection === 'about' ? 'active' : ''}>About Us</a></li>
-              <li><a href="#services" className={activeSection === 'services' ? 'active' : ''}>Services</a></li>
-              <li><a href="#brands" className={activeSection === 'brands' ? 'active' : ''}>Our Brands</a></li>
-              <li><a href="#team" className={activeSection === 'team' ? 'active' : ''}>Our Team</a></li>
-              <li><a href="#contact" className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
+              <li><a href="#home" className={activeSection === 'home' ? 'active' : ''} onClick={closeMenu}>Home</a></li>
+              <li><a href="#about" className={activeSection === 'about' ? 'active' : ''} onClick={closeMenu}>About Us</a></li>
+              <li><a href="#services" className={activeSection === 'services' ? 'active' : ''} onClick={closeMenu}>Services</a></li>
+              <li><a href="#brands" className={activeSection === 'brands' ? 'active' : ''} onClick={closeMenu}>Our Brands</a></li>
+              <li><a href="#team" className={activeSection === 'team' ? 'active' : ''} onClick={closeMenu}>Our Team</a></li>
+              <li><a href="#contact" className={activeSection === 'contact' ? 'active' : ''} onClick={closeMenu}>Contact</a></li>
             </ul>
           </nav>
 
-          <div className="header-cta">
-            <a href="#contact" className="btn-primary">Get Consultation</a>
+          <div className="header-right">
+            <div className="header-search">
+              <input type="text" placeholder="Search..." />
+              <Search size={18} className="search-icon" />
+            </div>
+            <button className="menu-toggle" onClick={toggleMenu}>
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
       </div>
@@ -77,7 +96,7 @@ const Header = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 40px;
+          gap: 20px;
         }
 
         .logo-img {
@@ -122,19 +141,98 @@ const Header = () => {
           background: var(--primary);
         }
 
-        .header-cta .btn-primary {
-          padding: 12px 25px;
-          border-radius: 8px;
-          font-size: 15px;
+        .header-right {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .header-search {
+          position: relative;
+          display: flex;
+          align-items: center;
+          background: #f4f4f4;
+          border-radius: 30px;
+          padding: 5px 15px;
+          width: 250px;
+        }
+
+        .header-search input {
+          border: none;
+          background: transparent;
+          outline: none;
+          padding: 8px 10px;
+          width: 100%;
+          font-family: 'Quicksand';
+          font-size: 14px;
+        }
+
+        .search-icon {
+          color: var(--text-muted);
+        }
+
+        .menu-toggle, .menu-close {
+          display: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: var(--secondary);
         }
 
         @media (max-width: 1024px) {
           .nav-links { gap: 15px; }
           .nav-links a { font-size: 14px; }
+          .header-search { width: 180px; }
         }
 
-        @media (max-width: 992px) {
-          .nav-wrapper { display: none; }
+        @media (max-width: 991px) {
+          .menu-toggle {
+            display: block;
+          }
+
+          .nav-wrapper {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            transition: 0.4s ease;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 80px 40px;
+            z-index: 2000;
+          }
+
+          .nav-wrapper.open {
+            right: 0;
+          }
+
+          .menu-close {
+            display: block;
+            position: absolute;
+            top: 25px;
+            right: 25px;
+          }
+
+          .nav-links {
+            flex-direction: column;
+            gap: 25px;
+          }
+
+          .nav-links a {
+            font-size: 18px;
+          }
+
+          .header-search {
+            display: none; /* Hide search on small mobile if it crowds the logo */
+          }
+        }
+
+        @media (max-width: 576px) {
+          .logo-img { height: 40px; }
+          .header-search { display: none; }
         }
       ` }} />
     </header>

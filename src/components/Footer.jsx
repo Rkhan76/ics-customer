@@ -8,11 +8,11 @@ const Footer = () => {
     <footer className="footer">
       <div className="container">
           <div className="footer-top">
-            <div className="footer-col about" style={{ gridColumn: 'span 2' }}>
+            <div className="footer-col about">
               <a href="#home">
                 <img src="/icslogomain.png" alt="iCS (UK) LTD" style={{ height: '50px', marginBottom: '20px' }} />
               </a>
-              <p className="description" style={{ maxWidth: '400px' }}>iCS (UK) LTD is a premier provider of corporate technical solutions, infrastructure management, and business integration services. We empower businesses with cutting-edge technology and sustainable infrastructure.</p>
+              <p className="description">iCS (UK) LTD is a premier provider of corporate technical solutions, infrastructure management, and business integration services. We empower businesses with cutting-edge technology and sustainable infrastructure.</p>
               <ul className="contact-info">
                 <li><MapPin size={18} color="var(--primary)" /> <strong>Address:</strong> 205 North Michigan Avenue, Suite 810 Chicago, 60601, USA</li>
                 <li><Phone size={18} color="var(--primary)" /> <strong>Call Us:</strong> (+91) - 540-025-124553</li>
@@ -21,7 +21,7 @@ const Footer = () => {
               </ul>
             </div>
             
-            <div className="footer-col">
+            <div className="footer-col links">
               <h3>Quick Links</h3>
               <ul>
                 <li><a href="#home">Home</a></li>
@@ -32,7 +32,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="footer-col">
+            <div className="footer-col corporate">
               <h3>Corporate</h3>
               <ul>
                 <li><a href="#">Privacy Policy</a></li>
@@ -63,8 +63,8 @@ const Footer = () => {
         }
         .footer-top {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 30px;
+          grid-template-columns: 2fr 1fr 1fr;
+          gap: 50px;
           margin-bottom: 50px;
         }
         .footer-col h3 {
@@ -87,14 +87,7 @@ const Footer = () => {
         .description {
           margin-bottom: 20px;
           color: var(--text-muted);
-        }
-        .app-buttons {
-          display: flex;
-          gap: 10px;
-          margin: 15px 0 25px;
-        }
-        .app-buttons img {
-          height: 40px;
+          max-width: 450px;
         }
 
         .footer-bottom {
@@ -103,6 +96,8 @@ const Footer = () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          flex-wrap: wrap;
+          gap: 20px;
         }
         .social-links {
           display: flex;
@@ -117,21 +112,34 @@ const Footer = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          transition: 0.3s;
         }
-        .footer-bottom .hotline {
-          display: flex;
-          align-items: center;
-          gap: 10px;
+        .social-links a:hover {
+          transform: translateY(-3px);
+          background: #2ea36d;
         }
-        .footer-bottom .hotline .num {
-          font-size: 20px;
-          font-weight: 700;
-          color: var(--primary);
-          display: block;
+
+        @media (max-width: 991px) {
+          .footer-top {
+            grid-template-columns: 1fr 1fr;
+          }
+          .footer-col.about {
+            grid-column: span 2;
+          }
         }
-        .footer-bottom .hotline .lab {
-          font-size: 12px;
-          color: var(--text-muted);
+
+        @media (max-width: 768px) {
+          .footer-top {
+            grid-template-columns: 1fr;
+            gap: 30px;
+          }
+          .footer-col.about {
+            grid-column: span 1;
+          }
+          .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+          }
         }
       ` }} />
     </footer>

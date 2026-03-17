@@ -119,14 +119,16 @@ const HomePage = () => {
             <h2 style={{ fontSize: '40px' }}>Our Core Services</h2>
             <p style={{ color: 'var(--text-muted)' }}>Tailored solutions for a healthier lifestyle.</p>
           </div>
-          <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', rowGap: '50px' }}>
-            {services.map((service, i) => (
-              <div key={i} className="service-card" style={{ padding: '40px', background: 'white', borderRadius: '20px', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-                <div style={{ fontSize: '50px', marginBottom: '20px' }}>{service.icon}</div>
-                <h3 style={{ marginBottom: '15px' }}>{service.title}</h3>
-                <p style={{ color: 'var(--text-muted)' }}>{service.desc}</p>
-              </div>
-            ))}
+          <div className="services-slider-container">
+            <div className="services-grid">
+              {services.map((service, i) => (
+                <div key={i} className="service-card" style={{ padding: '40px', background: 'white', borderRadius: '20px', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                  <div style={{ fontSize: '50px', marginBottom: '20px' }}>{service.icon}</div>
+                  <h3 style={{ marginBottom: '15px' }}>{service.title}</h3>
+                  <p style={{ color: 'var(--text-muted)' }}>{service.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -138,26 +140,28 @@ const HomePage = () => {
             <h2 style={{ fontSize: '48px', fontWeight: '800', textTransform: 'uppercase', marginBottom: '20px' }}>Our Featured Brands</h2>
             <p style={{ color: 'var(--text-muted)' }}>Quality brands trusted by thousands of businesses across the UK.</p>
           </div>
-          <div className="brands-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '30px', alignItems: 'center' }}>
-            {[
-              { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
-              { name: 'Double Lucky', img: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=200&h=100&auto=format&fit=crop' },
-              { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
-              { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
-              { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
-            ].map((brand, i) => (
-              <div key={i} className="brand-item" style={{ 
-                padding: '30px', 
-                background: '#f8f9fa', 
-                borderRadius: '15px', 
-                textAlign: 'center',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
-                <img src={brand.img} alt={brand.name} style={{ width: '100%', height: 'auto', filter: 'grayscale(100%)', opacity: '0.6', transition: 'all 0.3s ease' }} />
-                <h4 style={{ marginTop: '15px', color: '#666' }}>{brand.name}</h4>
-              </div>
-            ))}
+          <div className="brands-slider-container">
+            <div className="brands-grid">
+              {[
+                { name: 'Prima', img: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Double Lucky', img: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Texas Ranger', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Chef Pro', img: 'https://images.unsplash.com/photo-1574672280600-4accfa5b6f98?q=80&w=200&h=100&auto=format&fit=crop' },
+                { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
+              ].map((brand, i) => (
+                <div key={i} className="brand-item" style={{ 
+                  padding: '30px', 
+                  background: '#f8f9fa', 
+                  borderRadius: '15px', 
+                  textAlign: 'center',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer'
+                }}>
+                  <img src={brand.img} alt={brand.name} style={{ width: '100%', height: 'auto', filter: 'grayscale(100%)', opacity: '0.6', transition: 'all 0.3s ease' }} />
+                  <h4 style={{ marginTop: '15px', color: '#666' }}>{brand.name}</h4>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -300,6 +304,20 @@ const HomePage = () => {
           padding: 0 40px;
         }
 
+        .services-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+          row-gap: 50px;
+        }
+
+        .brands-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 30px;
+          align-items: center;
+        }
+
         .brand-item:hover {
           background: #fff;
           box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -369,8 +387,36 @@ const HomePage = () => {
           .hero-content p { font-size: 24px; }
           .newsletter-form { width: 100%; max-width: 450px; }
           
-          .why-grid, .services-grid, .team-grid { 
+          .why-grid, .team-grid { 
             grid-template-columns: repeat(2, 1fr) !important; 
+          }
+          
+          .services-slider-container, .brands-slider-container {
+            overflow-x: auto;
+            margin: 0 -20px;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Hide scrollbar Firefox */
+          }
+          .services-slider-container::-webkit-scrollbar, .brands-slider-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar Chrome/Safari */
+          }
+
+          .services-grid, .brands-grid {
+            display: flex !important;
+            grid-template-columns: none !important;
+            gap: 20px !important;
+          }
+
+          .service-card {
+            flex: 0 0 280px;
+            scroll-snap-align: center;
+          }
+
+          .brand-item {
+            flex: 0 0 200px;
+            scroll-snap-align: center;
           }
           
           .about-section .row {
@@ -379,7 +425,6 @@ const HomePage = () => {
             gap: 40px !important;
           }
           
-          .brands-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .contact-section .container > div:first-child { 
             grid-template-columns: 1fr !important; 
             gap: 40px !important; 
@@ -415,8 +460,12 @@ const HomePage = () => {
             height: 55px;
           }
           
-          .why-grid, .services-grid, .team-grid, .brands-grid { 
+          .why-grid, .team-grid { 
             grid-template-columns: 1fr !important; 
+          }
+
+          .service-card {
+            flex: 0 0 85%;
           }
           
           .message-form { grid-template-columns: 1fr !important; }
@@ -431,6 +480,9 @@ const HomePage = () => {
           .hero-content h1 { font-size: 34px; }
           .hero-content p { font-size: 18px; }
           .section-title, h2 { font-size: 32px !important; }
+          .service-card {
+            flex: 0 0 90%;
+          }
         }
       ` }} />
     </div>
