@@ -184,7 +184,7 @@ const Header = () => {
           border: none;
           cursor: pointer;
           color: var(--secondary);
-          display: flex;
+          display: none;
           align-items: center;
           justify-content: center;
         }
@@ -198,7 +198,7 @@ const Header = () => {
           border: none;
           cursor: pointer;
           color: var(--secondary);
-          display: flex;
+          display: none;
           align-items: center;
           justify-content: center;
           transition: all 0.3s;
