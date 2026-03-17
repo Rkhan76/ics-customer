@@ -247,17 +247,17 @@ const Header = () => {
 
           .nav-wrapper {
             position: absolute;
-            top: calc(100% + 10px);
-            right: 15px;
-            width: 200px;
+            top: 5px;
+            right: 0;
+            width: 180px;
             background: white;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             transition: 0.3s ease;
           }
 
@@ -269,15 +269,19 @@ const Header = () => {
 
           .menu-close-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            display: block;
+            top: 5px;
+            right: 5px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
 
           .nav-links {
             flex-direction: column;
             gap: 0;
-            margin-top: 15px;
+            margin-top: 40px;
           }
 
           .nav-links a {
