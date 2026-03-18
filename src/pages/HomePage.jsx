@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, Send, Mail, Phone, MapPin } from 'lucide-react';
 
 const HomePage = () => {
@@ -58,6 +59,8 @@ const HomePage = () => {
     { name: 'Nature Fresh', img: 'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=200&h=100&auto=format&fit=crop' }
   ];
 
+  const location = useLocation();
+
   React.useEffect(() => {
     const centerSlider = (ref) => {
       if (ref.current) {
@@ -67,6 +70,21 @@ const HomePage = () => {
     centerSlider(servicesRef);
     centerSlider(brandsRef);
   }, []);
+
+  React.useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          const y = element.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }, 100);
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location]);
 
   return (
     <div className="homepage">
