@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import BecomeACustomer from './pages/BecomeACustomer';
+import NotFound from './pages/NotFound';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -30,6 +31,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/become-a-customer" element={<BecomeACustomer />} />
+            {/* Catch-all for 404 Not Found Page */}
+            <Route path="*" element={<NotFound />} />
             {/* All other routes removed for corporate landing page */}
           </Routes>
         </main>
