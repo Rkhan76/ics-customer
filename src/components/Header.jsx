@@ -63,10 +63,9 @@ const Header = () => {
             <ul className="nav-links">
               <li><Link to="/" className={activeSection === 'home' ? 'active' : ''} onClick={closeMenu}>Home</Link></li>
               <li><Link to="/products" className={activeSection === 'products' ? 'active' : ''} onClick={closeMenu}>Products</Link></li>
-              <li><Link to="/#about" className={activeSection === 'about' ? 'active' : ''} onClick={closeMenu}>About Us</Link></li>
-              <li><Link to="/#services" className={activeSection === 'services' ? 'active' : ''} onClick={closeMenu}>Services</Link></li>
               <li><Link to="/#brands" className={activeSection === 'brands' ? 'active' : ''} onClick={closeMenu}>Our Brands</Link></li>
-              <li><Link to="/#team" className={activeSection === 'team' ? 'active' : ''} onClick={closeMenu}>Our Team</Link></li>
+              <li><Link to="/#about" className={activeSection === 'about' ? 'active' : ''} onClick={closeMenu}>About Us</Link></li>
+              <li><Link to="/become-a-customer" className={location.pathname === '/become-a-customer' ? 'active' : ''} onClick={closeMenu}>Become a Customer</Link></li>
               <li><Link to="/#contact" className={activeSection === 'contact' ? 'active' : ''} onClick={closeMenu}>Contact</Link></li>
             </ul>
           </nav>

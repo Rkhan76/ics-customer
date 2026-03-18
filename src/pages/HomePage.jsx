@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight, Send, Mail, Phone, MapPin } from 'lucide-react';
+import { 
+  ArrowRight, Send, Mail, Phone, MapPin, 
+  BadgePercent, LayoutGrid, Truck, ShieldCheck, Zap, RefreshCw 
+} from 'lucide-react';
 
 const HomePage = () => {
   const servicesRef = React.useRef(null);
@@ -43,12 +46,12 @@ const HomePage = () => {
   ];
 
   const services = [
-    { title: 'Best Prices & Offers', desc: 'We provide the most competitive prices in the market with exclusive seasonal offers.', icon: '💰', color: '#F2FCE4' },
-    { title: 'Wide Assortment', desc: 'A vast collection of products ranging from fresh produce to daily essentials.', icon: '🍇', color: '#FFFCEB' },
-    { title: 'Free Delivery', desc: 'Enjoy free doorstep delivery on all orders above a certain threshold.', icon: '🚚', color: '#ECFFEC' },
-    { title: '100% Satisfaction', desc: 'Your satisfaction is our top priority. We guarantee quality in every delivery.', icon: '⭐', color: '#FEEFEA' },
-    { title: 'Daily Deals', desc: 'Fresh new deals every day on your favorite categories and products.', icon: '🏷️', color: '#FFF3EB' },
-    { title: 'Easy Returns', desc: 'Not satisfied with a product? Return it within 24 hours for a full refund.', icon: '🔄', color: '#FFF3FF' },
+    { title: 'Best Prices & Offers', desc: 'We provide the most competitive prices in the market with exclusive seasonal offers.', icon: BadgePercent, color: '#F2FCE4' },
+    { title: 'Wide Assortment', desc: 'A vast collection of products ranging from fresh produce to daily essentials.', icon: LayoutGrid, color: '#FFFCEB' },
+    { title: 'Free Delivery', desc: 'Enjoy free doorstep delivery on all orders above a certain threshold.', icon: Truck, color: '#ECFFEC' },
+    { title: '100% Satisfaction', desc: 'Your satisfaction is our top priority. We guarantee quality in every delivery.', icon: ShieldCheck, color: '#FEEFEA' },
+    { title: 'Daily Deals', desc: 'Fresh new deals every day on your favorite categories and products.', icon: Zap, color: '#FFF3EB' },
+    { title: 'Easy Returns', desc: 'Not satisfied with a product? Return it within 24 hours for a full refund.', icon: RefreshCw, color: '#FFF3FF' },
   ];
 
   const brands = [
@@ -165,16 +168,45 @@ const HomePage = () => {
             <div style={{ flex: 1 }}>
               <img src="https://nest-frontend-v6.netlify.app/assets/imgs/page/about-1.png" alt="About Us" style={{ width: '100%', borderRadius: '30px' }} />
             </div>
-            <div style={{ flex: 1 }}>
-              <span className="section-subtitle">Since 2024</span>
-              <h2 style={{ fontSize: '48px', marginBottom: '30px' }}>Excellence in Corporate Solutions</h2>
-              <p style={{ fontSize: '18px', color: 'var(--text-muted)', marginBottom: '20px' }}>
-                iCS (UK) LTD is committed to providing top-tier technical and infrastructure support to businesses globally.
-              </p>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '30px' }}>
-                Our team works tirelessly to ensure that every solution we provide meets the highest standards of efficiency and modern technical requirements. We believe in a world where technology empowers business growth.
-              </p>
-              <button className="btn-primary">Learn More <ArrowRight size={18} /></button>
+            <div style={{ flex: 1.2 }}>
+              <span className="section-subtitle">Our Story</span>
+              <h2 style={{ fontSize: '42px', marginBottom: '25px', color: '#253D4E' }}>ICS (UK) Ltd: Specialising in Catering & Packaging</h2>
+              
+              <div style={{ color: '#4b5563', lineHeight: '1.7', fontSize: '16px' }}>
+                <p style={{ marginBottom: '15px' }}>
+                  <strong>ICS (UK) Ltd</strong> is a well established company specialising in the distribution of catering products and packaging. Our location in the geographical heart of the United Kingdom, allows us to successfully distribute our range of ambient, frozen and refrigerated products.
+                </p>
+                <p style={{ marginBottom: '15px' }}>
+                  We are committed to selling a high quality range of own label products, as well as selected national and private label products for the catering services sector. Built through years of experience; our extensive knowledge of the catering market has helped us build a tried and tested portfolio of products, which trade under the <strong>Prima, Double Lucky, Texas Ranger, Manhattan Town, Atlantius, Al Ameen, Eazi-Pak, My Flavourite Chicken, Milano and Eazi-Klean</strong> brands.
+                </p>
+                <p style={{ marginBottom: '15px' }}>
+                  ICS (UK) Ltd have worked closely with their suppliers to develop a range of products in these brands, which are suitable for commercial kitchens and the foodservice sector. These are directly imported and successfully distributed to the wholesale sector; both nationwide across the UK and Europe.
+                </p>
+                <p style={{ marginBottom: '25px' }}>
+                  Over the years, ICS (UK) Ltd has acquired an enviable reputation for establishing long term relationships with both suppliers and customers. Alongside this, our commitment to personnel development has resulted in the ICS group having one of the sector’s most dynamic and positive teams, who have an unmatched understanding of what our customers’ requirements are – so we can ensure their fulfilment.
+                </p>
+                
+                <div style={{ 
+                  background: '#f1f8f1', 
+                  padding: '30px', 
+                  borderRadius: '20px', 
+                  borderLeft: '5px solid var(--primary)',
+                  fontStyle: 'italic',
+                  marginBottom: '20px'
+                }}>
+                  <p style={{ marginBottom: '15px', fontSize: '17px', color: '#1a202c' }}>
+                    ‘We truly believe that strong relationships with both suppliers and customers are the key to success and longevity in the business world. Developing these mutually beneficial relationships has helped us grow as a company and allowed us to acquire our reputation for quality products with competitive pricing.’
+                  </p>
+                  <div style={{ fontWeight: '700', color: '#253D4E' }}>
+                    Ismail Bhamji
+                    <div style={{ fontSize: '13px', fontWeight: '400', color: '#718096' }}>(Director of ICS UK Ltd)</div>
+                  </div>
+                </div>
+              </div>
+              
+              <Link to="/products" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                Explore Our Range <ArrowRight size={18} />
+              </Link>
             </div>
           </div>
         </div>
@@ -191,11 +223,23 @@ const HomePage = () => {
                ref={servicesRef}
                onScroll={() => handleScroll(servicesRef, setServicesProgress, services.length)}>
             <div className="services-grid">
-              {[...services, ...services, ...services].map((service, i) => (
-                <div key={i} className="service-card" style={{ padding: '40px', background: 'white', borderRadius: '20px', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-                  <div style={{ fontSize: '50px', marginBottom: '20px' }}>{service.icon}</div>
-                  <h3 style={{ marginBottom: '15px' }}>{service.title}</h3>
-                  <p style={{ color: 'var(--text-muted)' }}>{service.desc}</p>
+              {[...services, ...services, ...services].map(({ icon: Icon, ...service }, i) => (
+                <div key={i} className="service-card" style={{ padding: '40px', background: 'white', borderRadius: '20px', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', transition: 'all 0.3s ease' }}>
+                  <div style={{ 
+                    width: '80px', 
+                    height: '80px', 
+                    backgroundColor: '#f1f8f1',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 25px',
+                    color: 'var(--primary)'
+                  }}>
+                    <Icon size={36} strokeWidth={2.5} />
+                  </div>
+                  <h3 style={{ marginBottom: '15px', color: 'var(--secondary)', fontSize: '20px' }}>{service.title}</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '15px', lineHeight: '1.6' }}>{service.desc}</p>
                 </div>
               ))}
             </div>
