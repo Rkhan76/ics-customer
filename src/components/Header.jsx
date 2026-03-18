@@ -9,14 +9,23 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // 1. Handle Pathname-based active states for whole pages
     if (location.pathname === '/products') {
       setActiveSection('products');
       return;
     }
+    if (location.pathname === '/become-a-customer') {
+      setActiveSection('become-a-customer');
+      return;
+    }
 
+    // 2. Handle Scroll-based active states for Home page sections
     const handleScroll = () => {
+      // Only track sections if we are on the Home page
+      if (location.pathname !== '/') return;
+
       const sections = ['home', 'about', 'services', 'brands', 'team', 'contact'];
-      const scrollPosition = window.scrollY + 100; // Offset for sticky header
+      const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -30,14 +39,25 @@ const Header = () => {
           }
         }
       }
-
-      // Track scroll for shadow
-      setIsScrolled(window.scrollY > 20);
     };
 
+    // If on home page but no scroll yet, default to home
+    if (location.pathname === '/' && !location.hash) {
+      if (window.scrollY < 100) setActiveSection('home');
+      handleScroll(); // Initial check
+    }
+
+    // Track scroll for shadow (always active)
+    const trackScrollShadow = () => setIsScrolled(window.scrollY > 20);
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', trackScrollShadow);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', trackScrollShadow);
+    };
+  }, [location]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -61,12 +81,12 @@ const Header = () => {
               <X size={24} />
             </button>
             <ul className="nav-links">
-              <li><Link to="/" className={activeSection === 'home' ? 'active' : ''} onClick={closeMenu}>Home</Link></li>
+              <li><Link to="/" className={activeSection === 'home' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>Home</Link></li>
               <li><Link to="/products" className={activeSection === 'products' ? 'active' : ''} onClick={closeMenu}>Products</Link></li>
-              <li><Link to="/#brands" className={activeSection === 'brands' ? 'active' : ''} onClick={closeMenu}>Our Brands</Link></li>
-              <li><Link to="/#about" className={activeSection === 'about' ? 'active' : ''} onClick={closeMenu}>About Us</Link></li>
-              <li><Link to="/become-a-customer" className={location.pathname === '/become-a-customer' ? 'active' : ''} onClick={closeMenu}>Become a Customer</Link></li>
-              <li><Link to="/#contact" className={activeSection === 'contact' ? 'active' : ''} onClick={closeMenu}>Contact</Link></li>
+              <li><Link to="/#brands" className={activeSection === 'brands' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>Our Brands</Link></li>
+              <li><Link to="/#about" className={activeSection === 'about' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>About Us</Link></li>
+              <li><Link to="/become-a-customer" className={activeSection === 'become-a-customer' ? 'active' : ''} onClick={closeMenu}>Become a Customer</Link></li>
+              <li><Link to="/#contact" className={activeSection === 'contact' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>Contact</Link></li>
             </ul>
           </nav>
 
