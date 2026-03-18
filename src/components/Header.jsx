@@ -83,8 +83,8 @@ const Header = () => {
             <ul className="nav-links">
               <li><Link to="/" className={activeSection === 'home' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>Home</Link></li>
               <li><Link to="/products" className={activeSection === 'products' ? 'active' : ''} onClick={closeMenu}>Products</Link></li>
+               <li><Link to="/#about" className={activeSection === 'about' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>About Us</Link></li>
               <li><Link to="/#brands" className={activeSection === 'brands' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>Our Brands</Link></li>
-              <li><Link to="/#about" className={activeSection === 'about' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>About Us</Link></li>
               <li><Link to="/become-a-customer" className={activeSection === 'become-a-customer' ? 'active' : ''} onClick={closeMenu}>Become a Customer</Link></li>
               <li><Link to="/#contact" className={activeSection === 'contact' && location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>Contact</Link></li>
             </ul>
